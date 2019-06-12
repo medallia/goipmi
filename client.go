@@ -18,6 +18,7 @@ package ipmi
 
 import (
 	"bytes"
+	"log"
 )
 
 // Client provides common high level functionality around the underlying transport
@@ -141,6 +142,10 @@ func (c *Client) GetMcId() (*DcmiGetMcIdResponse, error) {
 			return res, err
 		}
 
+		log.Printf("[GOIPMI %s] Response: ", c.Connection.Hostname, res)
+
+		// Accumulate the bytes received in the index until it
+		// is the same as the number of bytes expected
 		dataBuffer.WriteString(res.Data)
 		if len(res.Data) != MAX_MC_ID_STRING_LEN {
 			res.Data = dataBuffer.String()
@@ -161,4 +166,3 @@ func (c *Client) SetMcId(mcId string) (*DcmiSetMcIdResponse, error) {
 	res := &DcmiSetMcIdResponse{}
 	return res, c.Send(r, res)
 }
-

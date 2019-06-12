@@ -142,7 +142,7 @@ func (c *Client) GetMcId() (*DcmiGetMcIdResponse, error) {
 			return res, err
 		}
 
-		log.Printf("[GOIPMI %s] Response: ", c.Connection.Hostname, res)
+		log.Printf("[GOIPMI %s] Response: %+v", c.Connection.Hostname, res)
 
 		// Accumulate the bytes received in the index until it
 		// is the same as the number of bytes expected
